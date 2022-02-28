@@ -5,6 +5,7 @@
       <span>{{ currentTitle }}</span>
       <v-avatar color="primary lighten-2" class="subheading white--text" size="24" v-text="step"></v-avatar>
     </v-card-title>
+  
 
     <v-window v-model="step">
       <v-window-item :value="1">
