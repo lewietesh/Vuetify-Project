@@ -12,7 +12,7 @@
           <v-img src="./assets/logo3.png"></v-img>
         </v-avatar>Blogpedia
       </v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer class="spacer-element"></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn
           plain
@@ -24,14 +24,14 @@
           :class="{ 'red--text': item.active == 'true' }"
         >{{ item.title }}</v-btn>
       </v-toolbar-items>
-      <v-form v-model="valid" class="mt-4 pt-4">
+      <v-form v-model="valid" class="form-styling hidden-sm-and-down">
         <v-text-field v-model="firstname" class="search-form" solo append-icon="mdi-magnify">
           <template v-slot:label>
             <!-- <v-icon>mdi-magnify</v-icon> -->
           </template>
         </v-text-field>
       </v-form>
-      <v-app-bar-nav-icon elevation="2 " class="ml-3 mb-3" color="white" @click="drawer = true"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon elevation="2 " class="ml-md-2 mb-3" color="white" @click="drawer = true"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -121,6 +121,10 @@ export default {
     display: inline !important;
 
   }
+    .form-styling{
+  margin-top:12pt;
+  padding-top: 12pt !important;
+  }
   .search-form {
       border-radius:24pt !important;
       
@@ -128,5 +132,38 @@ export default {
 }
 
 @media all and (max-width:768px) {
+.title-block {
+    color: #fff;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-weight: 600;
+    font-size: 24pt;
+  }
+  .form-styling{
+  margin-top:12pt;
+  }
+
+.search-form{
+border-radius: 17pt;
+width:100%;
+height: 80% !important;
+
+}
+
+}
+
+@media all and (max-width:600px){
+.title-block{
+font-size: 20pt;
+}
+.search-form{
+width: 75%;
+}
+
+}
+@media all and (max-width:500px){
+.search-form{
+width:50%;
+}
 }
 </style>
