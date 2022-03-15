@@ -1,103 +1,132 @@
 <template>
-    <div>
-        <v-app-bar elevation="4" dense color="green accent-3">
-            <v-toolbar-title class="title-block">
-                <v-avatar rounded size="30">
-                    <font-awesome-icons :icon="['fab', 'drupal']" class="logo" />
-                </v-avatar>Blogpedia
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-sm-and-down">
-                <v-btn plain small
-                v-for="item in menu" 
-                :key="item.icon"
-                class="nav-elements"
-                 :class="{'red--text': item.active == 'true'}"
-                
-                >{{item.title}}</v-btn>
-            </v-toolbar-items>
-            <v-spacer></v-spacer>
-            <v-app-bar-nav-icon color="white" @click="drawer = true"></v-app-bar-nav-icon>
-        </v-app-bar>
-          <v-card
-    class="mx-auto overflow-hidden"
-    height="100vh"
-  >
-
-
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      temporary
+  <v-container-fluid>
+    <v-app-bar
+      elevation="3"
+      elevate-on-scroll
+      fade-img-on-scroll
+      color="black"
+      class="header-content pt-2"
     >
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item>
+      <v-toolbar-title class="title-block">
+        <v-avatar rounded size="35" class="mr-5">
+          <v-img src="./assets/logo3.png"></v-img>
+        </v-avatar>Blogpedia
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn
+          plain
+          rounded
+          elevation="0"
+          v-for="item in menu"
+          :key="item.icon"
+          class="nav-elements white--text"
+          :class="{ 'red--text': item.active == 'true' }"
+        >{{ item.title }}</v-btn>
+      </v-toolbar-items>
+      <v-form v-model="valid" class="mt-4 pt-4">
+        <v-text-field v-model="firstname" class="search-form" solo append-icon="mdi-magnify">
+          <template v-slot:label>
+            <!-- <v-icon>mdi-magnify</v-icon> -->
+          </template>
+        </v-text-field>
+      </v-form>
+      <v-app-bar-nav-icon elevation="2 " class="ml-3 mb-3" color="white" @click="drawer = true"></v-app-bar-nav-icon>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list rounded dense>
+        <v-list-item-group v-model="group" active-class="deep-purple--text ">
+          <v-list-item v-for="(item) in minbar" :key="item.icon" class="side-bar">
             <v-list-item-icon>
-              <v-icon>mdi-account-cog-outline</v-icon>
+              <v-icon class="side-text">{{ item.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title class="side-text">{{ item.title }}</v-list-item-title>
           </v-list-item>
-
-
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-  </v-card>
-    </div>
+
+  </v-container-fluid>
 </template>
 
 <script>
+import one from '../Dashboard/assets/three.jpg'
 export default {
-    name: 'NavbarVue',
-    data: () => {
-        return {
-            menu: [
-                { icon: 'home', title: "Home", active: "true" },
-                { icon: 'posts', title: "Posts", active: "false"},
-                { icon: 'settings', title: "Settings", active: "false"},
-                { icon: 'help', title: "Help", active: "false" },
+  name: 'NavbarVue',
+  data: () => {
+    return {
+      one,
+      menu: [
+        { icon: 'home', title: "Home", active: "true" },
+        { icon: 'posts', title: "Posts", active: "false" },
+        { icon: 'settings', title: "Settings", active: "false" },
+        { icon: 'help', title: "Help", active: "false" },
 
-            ],
-            drawer:false,
-            group:null,
-            minbar: [
-                {icon: 'mdi-home', title:"Home"},
-                {icon: 'mdi-brief-case-outline', title:"Posts"},
-                {icon: 'mdi-account-cog-outline', title:"Setting"},
-                {icon: 'mdi-help-circle-outline', title:"Help"}
-            ]
-        }
-
-    },
-    methods:{
-        changeColor : () =>{
-            console.log('Hello world')
-        }
+      ],
+      drawer: false,
+      group: null,
+      minbar: [
+        { icon: 'mdi-home', title: "Home" },
+        { icon: 'mdi-briefcase-outline', title: "Posts" },
+        { icon: 'mdi-account-cog-outline', title: "Setting" },
+        { icon: 'mdi-help-circle-outline', title: "Help" }
+      ]
     }
+
+  },
+  methods: {
+    changeColor: () => {
+      console.log('Hello world')
+    }
+  }
 
 }
 </script>
 
 <style  scoped>
 @media all and (min-width: 768px) {
-    /* styling navbar component title and logo*/
+  /* styling navbar component title and logo*/
 
-    .title-block {
-        color: #fff;
-        font-weight: 800;
-        font-size: 18pt;
-    }
-    .nav-elements{
-    color:#fff;
+  /* Header content*/
+  .header-content {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .title-block {
+    color: #fff;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-weight: 600;
+    font-size: 24pt;
+  }
+  .nav-elements {
     font-weight: 600;
     font-size: 12pt;
-    }
+    margin: 0 6pt;
+    padding: 3pt;
+  }
+  .side-text {
+    font-size: 14pt;
+    font-weight: 600;
+    color: #000814;
+  }
+
+  .side-bar {
+    background-color: #e2eafc81;
+    padding: 0 16pt !important;
+  }
+  .search-button {
+    display: inline !important;
+
+  }
+  .search-form {
+      border-radius:24pt !important;
+      
+  }
+}
+
+@media all and (max-width:768px) {
 }
 </style>

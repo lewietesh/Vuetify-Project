@@ -53,8 +53,7 @@ export default{
 <style scoped>
 @media all and (min-width:768px){
 .app-footer{
-position: fixed;
-bottom: 0;
+
 }
 }
 </style>
