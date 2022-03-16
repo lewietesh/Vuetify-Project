@@ -27,21 +27,42 @@
       <v-form v-model="valid" class="form-styling hidden-sm-and-down">
         <v-text-field v-model="firstname" class="search-form" solo append-icon="mdi-magnify">
           <template v-slot:label>
-            <!-- <v-icon>mdi-magnify</v-icon> -->
+        
           </template>
         </v-text-field>
       </v-form>
       <v-app-bar-nav-icon elevation="2 " class="ml-md-2 mb-3" color="white" @click="drawer = true"></v-app-bar-nav-icon>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list rounded dense>
+    <v-navigation-drawer v-model="drawer" absolute temporary class="side-block">
+        <v-avatar rounded size="40" class="mt-2">
+          <v-img src="./assets/logo3.png"></v-img>
+          
+        </v-avatar>
+
+    <h4> Blogpedia </h4>
+    <v-form class="form-box">
+    <v-text-field
+            v-model="message4"
+            label="Search"
+            outlined
+            dense
+            rounded
+            clearable
+            class=""
+          ></v-text-field>
+
+    </v-form>
+    
+      <v-list  shaped>
         <v-list-item-group v-model="group" active-class="deep-purple--text ">
-          <v-list-item v-for="(item) in minbar" :key="item.icon" class="side-bar">
-            <v-list-item-icon>
-              <v-icon class="side-text">{{ item.icon }}</v-icon>
+          <v-list-item v-for="(item) in minbar" :key="item.icon" class="side-bar" elevation="2">
+            <v-list-item-icon class="">
+              <v-icon class="side-text "  >{{ item.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title class="side-text">{{ item.title }}</v-list-item-title>
+            <v-list-item-content>
+                        <v-list-item-title class="side-text">{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -108,14 +129,19 @@ export default {
     padding: 3pt;
   }
   .side-text {
-    font-size: 14pt;
-    font-weight: 600;
-    color: #000814;
+    font-size: 12pt !important;
+    font-weight: 600 !important;
+    color: blue !important;
+
+
   }
 
   .side-bar {
-    background-color: #e2eafc81;
-    padding: 0 16pt !important;
+  margin: 3pt 0 !important;
+    background-color: rgba(100, 92, 92, 0.1);
+  }
+  .form-box{
+  padding: 4pt;
   }
   .search-button {
     display: inline !important;
@@ -129,9 +155,30 @@ export default {
       border-radius:24pt !important;
       
   }
+
+  /* Sideblock Nagivation*/
+ 
+  .side-block h4{
+  font-weight: 700;
+  color: #000;
+  font-size: 24pt;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+
+
+
+  }
 }
 
 @media all and (max-width:768px) {
+  .side-block h4{
+  font-weight: 700;
+  color: #000;
+  font-size: 24pt;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+
+
+
+  }
 .title-block {
     color: #fff;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
@@ -149,6 +196,22 @@ width:100%;
 height: 80% !important;
 
 }
+
+ .side-text {
+    font-size: 12pt !important;
+    font-weight: 600 !important;
+    color: blue !important;
+
+
+  }
+
+  .side-bar {
+  margin: 3pt 0 !important;
+    background-color: rgba(100, 92, 92, 0.1);
+  }
+  .form-box{
+  padding: 4pt;
+  }
 
 }
 

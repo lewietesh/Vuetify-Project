@@ -2,6 +2,7 @@
 <v-app>
 <NavbarVue />
 <DashboardVue />
+<MainVue />
 <FooterVue />
 </v-app>
 </template>
@@ -11,13 +12,15 @@
 import NavbarVue from '@/components/navigation/Navbar.vue'
 import FooterVue from '@/components/navigation/Footer.vue'
 import DashboardVue from '@/components/Dashboard/Dashboard.vue'
+import MainVue from '@/components/Body/Main.vue'
 
 export default {
   name: 'HomeView',
   components: {
     NavbarVue,
     FooterVue,
-    DashboardVue
+    DashboardVue,
+    MainVue
     
   }
 }
