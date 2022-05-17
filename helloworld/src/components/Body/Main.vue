@@ -3,15 +3,17 @@
         <v-row>
             <v-col class="col-lg-9 col-sm-12 col-md-12 blog-block">
                 <v-card class="blog-cards" tile v-for="post in posts" :key="post.author">
-                    <v-img height="250" :src="post.image"></v-img>
+                    <v-img class="postImage" :src="post.image"></v-img>
                     <v-card-title class="post-title">{{ post.title }}</v-card-title>
                     <div class="date-author-block">
-                        <span class="author">John Doe</span>
+                        <span class="author">{{ post.author }}</span>
                         <span class="date">18 Nov 2022</span>
                     </div>
-                    <div
-                        class="blog-body"
-                    >Sarah watched the whirlpool mesmerized. She couldn't take her eyes off the water swirling around and around. She stuck in small twigs and leaves to watch the whirlpool catch them and then suck them down. It bothered her more than a little bit that this could also be used as a metaphor for her life</div>
+                    <div class="blog-body">
+                        <p>Out of another, I get a lovely view of the bay and a little private wharf belonging to the estate. There is a beautiful shaded lane that runs down there from the house. I always fancy I see people walking in these numerous paths and arbors, but John has cautioned me not to give way to fancy in the least. He says that with my imaginative power and habit of story-making a nervous weakness like mine is sure to lead to all manner of excited fancies and that I ought to use my will and good sense to check the tendency. So I try.</p>
+                        <v-btn large color="red white--text" rounded><router-link class="white--text page-links" to="/article/2:">Continue reading </router-link> </v-btn>
+                        
+                    </div>
                     <div class="card-footer">
                         <v-btn icon color="blue " class="mr-5">
                             <v-icon>mdi-share-variant</v-icon>
@@ -158,7 +160,7 @@ export default {
                     content: "lorem ipsium is a dummy text",
                     image: "https://images.unsplash.com/photo-1566371486490-560ded23b5e4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dmFjYXRpb258ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
                     date: "21-02-2021",
-                    author: "Faith",
+                    author: "Jessica",
                     comments: 9,
                     likes: 290
 
@@ -241,23 +243,34 @@ export default {
 .contentBody {
     font-family: "Libre Baskerville", serif;
 }
+.card-footer {
+    text-align: right !important;
+}
 @media all and (min-width: 768px) {
     .blog-block {
     }
     .blog-cards {
         display: inline-block;
-        width: 360px;
+        width: 80%;
         margin: 12pt 8pt;
+    }
+    .postImage {
+        height: 350px;
     }
     .blog-body {
         text-align: left;
         padding: 10pt;
         font-family: "Fredoka", sans-serif;
-        font-weight: 400;
+        font-weight: 300;
         font-size: 12pt;
     }
-    .card-footer {
+    .blog-body p {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
     }
+
     .date-author-block {
         text-align: left;
         padding: 0 10pt;
@@ -326,6 +339,69 @@ export default {
     }
     .tagBlock .tags {
         margin: 4pt;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .blog-cards {
+        display: inline-block;
+        width: 90%;
+        margin: 12pt 8pt;
+    }
+    .postImage {
+        height: 300px;
+    }
+    .blog-body {
+        text-align: left;
+        padding: 10pt;
+        font-family: "Fredoka", sans-serif;
+        font-weight: 300;
+        font-size: 12pt;
+    }
+
+    .blog-body p {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+    }
+
+    .date-author-block {
+        text-align: left;
+        padding: 0 10pt;
+    }
+    .post-title {
+        font-weight: 700;
+        font-size: 14pt;
+        padding: 4pt !important;
+    }
+    .date-author-block {
+        font-size: 11pt;
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.479);
+    }
+    .date-author-block .date {
+        margin-left: 12pt;
+    }
+    hr {
+        color: rgba(0, 0, 0, 1);
+    }
+
+    .card-footer {
+        padding: 8pt 4pt;
+        text-align: left;
+    }
+    .card-footer span {
+        margin: 0 2pt;
+        color: rgba(0, 0, 0, 0.877);
+        font-weight: 500;
+    }
+}
+
+@media all and (max-width: 489px) {
+    .postImage {
+        height: 280px;
+        
     }
 }
 </style>

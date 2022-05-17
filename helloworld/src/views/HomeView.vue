@@ -2,6 +2,7 @@
 <v-app>
 <NavbarVue />
 <DashboardVue />
+<CategoryScrollVue />
 <MainVue />
 <FooterVue />
 </v-app>
@@ -13,6 +14,7 @@ import NavbarVue from '@/components/navigation/Navbar.vue'
 import FooterVue from '@/components/navigation/Footer.vue'
 import DashboardVue from '@/components/Dashboard/Dashboard.vue'
 import MainVue from '@/components/Body/Main.vue'
+import CategoryScrollVue from '@/components/Body/CategoryScroll.vue'
 
 export default {
   name: 'HomeView',
@@ -20,7 +22,8 @@ export default {
     NavbarVue,
     FooterVue,
     DashboardVue,
-    MainVue
+    MainVue,
+    CategoryScrollVue
     
   }
 }
