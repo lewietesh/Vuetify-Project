@@ -6,7 +6,8 @@ from .models import Posts
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
-class PostsSerializer( serializers.HyperlinkedModelSerializer):
+class PostsSerializer( serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Posts
         fields = ['id','title', 'category', 'content', 'image', 'date_published', 'author', 'comments', 'likes']
