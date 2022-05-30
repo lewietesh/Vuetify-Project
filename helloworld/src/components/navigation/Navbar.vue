@@ -1,6 +1,6 @@
 <template>
-  <v-container-fluid>
-    <v-app-bar elevation="3" elevate-on-scroll fade-img-on-scroll color="black" class="header-content pt-2">
+  <v-container fluid class="red pa-0">
+    <v-app-bar elevation="3" elevate-on-scroll fade-img-on-scroll color="black" class="header-content p-0 m-0">
       <v-toolbar-title class="title-block">
         <v-avatar rounded size="35" class="mr-5">
           <v-img src="./assets/logo3.png"></v-img>
@@ -13,8 +13,8 @@
           </router-link>
         </v-btn>
       </v-toolbar-items>
-      <v-form v-model="valid" class="form-styling hidden-sm-and-down">
-        <v-text-field v-model="firstname" class="search-form" solo append-icon="mdi-magnify">
+      <v-form class="form-styling hidden-sm-and-down">
+        <v-text-field  class="search-form" solo append-icon="mdi-magnify">
           <template v-slot:label>
 
           </template>
@@ -31,7 +31,7 @@
 
       <h4> Blogpedia </h4>
       <v-form class="form-box">
-        <v-text-field v-model="message4" label="Search" outlined dense rounded clearable class=""></v-text-field>
+        <v-text-field label="Search" outlined dense rounded clearable class=""></v-text-field>
 
       </v-form>
 
@@ -42,14 +42,17 @@
               <v-icon class="side-text ">{{ item.icon }}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="side-text">{{ item.title }}</v-list-item-title>
+              <v-list-item-title class="side-text"> 
+              <router-link :to="{name: item.to}">  {{ item.title }}</router-link>
+             
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 
-  </v-container-fluid>
+  </v-container>
 </template>
 
 <script>
@@ -60,19 +63,19 @@ export default {
     return {
       one,
       menu: [
-        { icon: '/', title: "Home", active: "true" },
-        { icon: '/post', title: "Posts", active: "false" },
-        { icon: '/settings', title: "Settings", active: "false" },
-        { icon: '/help', title: "Help", active: "false" },
+        { icon: '/', title: "Home", active: "true" , to: 'home'},
+        { icon: '/post', title: "Manage", active: "false"  },
+        { icon: '/settings', title: "Setting", active: "false" },
+
 
       ],
       drawer: false,
       group: null,
       minbar: [
-        { icon: 'mdi-home', title: "Home" },
-        { icon: 'mdi-briefcase-outline', title: "Posts" },
-        { icon: 'mdi-account-cog-outline', title: "Setting" },
-        { icon: 'mdi-help-circle-outline', title: "Help" }
+        { icon: 'mdi-home', title: "Home", to:"home"},
+        { icon: 'mdi-briefcase-outline', title: "Manage", to:"manage" },
+        { icon: 'mdi-account-cog-outline', title: "Setting", to: "setting" },
+
       ]
     }
 

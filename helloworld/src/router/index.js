@@ -21,7 +21,29 @@ const routes = [
     path: '/article/:id',
     name: 'article',
     component: () => import('../views/SingleBlogView.vue')
+  },
+  {
+    path:'/manage',
+    name: 'manage',
+    component: () => import('../views/ManageView.vue'),
+    beforeEach: () => {
+
+    }
+  },
+  {
+    path:'/setting',
+    name: 'setting',
+    component: () => import('../views/SettingView.vue'),
+    beforeEach: () => {
+
+    }
+  },
+  {
+    path: '*',
+    name: 'pagenotfound',
+    component: () => import('../views/404View.vue')
   }
+
 ]
 
 const router = new VueRouter({

@@ -1,5 +1,5 @@
 <template>
-    <v-container-fluid class="contentBody">
+    <v-container fluid class="contentBody pa-0">
         <v-row>
             <v-col class="col-lg-9 col-sm-12 col-md-12 blog-block">
                 <v-card class="blog-cards" tile v-for="post in posts" :key="post.author">
@@ -44,7 +44,7 @@
                 <v-card class="sideCard" tile>
                     <v-list dense>
                         <v-subheader class="blue--text side-heading">CATEGORIES</v-subheader>
-                        <v-list-item-group v-model="selectedItem">
+                        <v-list-item-group>
                             <v-list-item
                                 rounded
                                 class="listItems"
@@ -56,7 +56,7 @@
                                         color="blue white--text"
                                         small
                                         fab
-                                        flat
+                                        
                                     >{{ item.categoryAmount }}</v-btn>
                                 </v-list-item-icon>
                                 <v-list-item-content>
@@ -134,7 +134,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    </v-container-fluid>
+    </v-container >
 </template>
 
 <script>

@@ -9,6 +9,7 @@
                 <v-window-item :value="1">
                   <v-row>
                     <v-col cols="12" md="8" class="mb-4">
+                      <FlashMessage :position="'right top'"></FlashMessage>
                       <v-card-text class="mt-5">
                         <h3 class="text-center large-headings teal--text text--accent-3">Sign in to Blogpedia</h3>
                         <div class="text-center mt-4">
@@ -24,18 +25,33 @@
                           </v-btn>
                         </div>
                         <h4 class="text-center mt-4">Use your registered email</h4>
-                        <form>
-                          <v-text-field label="Email" name="Email" prepend-icon="email" type="text"
-                            color="teal accent-3" />
+                        
+                        <ValidationObserver v-slot="{ invalid }">
+                          <v-form @submit.prevent="loginUser" ref="form">
+                            <ValidationProvider name="username" rules="required" v-slot="{ errors }">
 
-                          <v-text-field id="password" label="Password" name="password" prepend-icon="lock"
-                            type="password" color="teal accent-3" />
-                        </form>
+                              <v-text-field label="Username" v-model.trim="username" name="username"
+                                prepend-icon="person" type="text" color="teal accent-3" />
+                              <span>{{ errors[0] }}</span>
+
+                            </ValidationProvider>
+
+                            <ValidationProvider name="password" rules="required" v-slot="{ errors }">
+
+                              <v-text-field id="password" label="password" type="password" v-model.trim="password"
+                                name="password" prepend-icon="lock" color="teal accent-3" />
+                              <span>{{ errors[0] }}</span>
+
+                            </ValidationProvider>
+                            <div class="text-center mt-3">
+                              <v-btn rounded color="teal accent-3" type="submit" :disabled="invalid" dark>SIGN IN
+                              </v-btn>
+                            </div>
+                          </v-form>
+                        </ValidationObserver>
                         <h3 class="text-center mt-4">Forgot your password ?</h3>
                       </v-card-text>
-                      <div class="text-center mt-3">
-                        <v-btn rounded color="teal accent-3" dark>SIGN IN</v-btn>
-                      </div>
+
                     </v-col>
                     <v-col cols="12" md="4" class="teal accent-3 mt-">
                       <v-card-text class="white--text mt-12">
@@ -82,7 +98,7 @@
                         </div>
                         <h4 class="text-center mt-4">Ensure your email for registration</h4>
                         <ValidationObserver v-slot="{ invalid }">
-                          <form @submit.prevent="onSubmit">
+                          <form @submit.prevent="createUser">
 
 
                             <ValidationProvider name="Username" rules="required" v-slot="{ errors }">
@@ -98,17 +114,19 @@
                               <span>{{ errors[0] }}</span>
                             </ValidationProvider>
 
-                            <ValidationProvider name="password" rules="required|min:8" v-slot="{ errors }" ref="password">
+                            <ValidationProvider name="password" rules="required|min:8|max:30" v-slot="{ errors }"
+                              ref="password">
 
-                              <v-text-field id="password" label="Password" v-model="password" 
-                                name="password" prepend-icon="lock" type="password" color="teal accent-3" />
+                              <v-text-field id="password" label="Password" v-model="password" name="password"
+                                prepend-icon="lock" type="password" color="teal accent-3" />
                               <span>{{ errors[0] }}</span>
                             </ValidationProvider>
 
                             <validationProvider name="Confirm Password" rules="required|confirmed:password"
                               v-slot="{ errors }">
-                              <v-text-field id="confirmpassword" label="Confirm Password" v-model="confpassword"
-                                name="confirmpassword" prepend-icon="lock" data-vv-as="password" type="password" color="teal accent-3" />
+                              <v-text-field id="confirmpassword" label="Confirm Password" v-model="confirmpassword"
+                                name="confirmpassword" prepend-icon="lock" data-vv-as="password" type="password"
+                                color="teal accent-3" />
 
                               <span>{{ errors[0] }}</span>
                             </validationProvider>
@@ -135,23 +153,131 @@
 </template>
 
 <script>
+
+import { mapMutations } from "vuex";
+import axios from "axios"
 export default {
   data: () => ({
     step: 1,
     username: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    confirmpassword: '',
+    token: '',
     errors: []
   }),
-  props: {
-    source: String
+  created() {
+
+
+  },
+
+  computed: {
+    ...mapMutations(["setUser", "setToken"]),
+
   },
   methods: {
 
     onSubmit() {
       alert("Your form was successfully submitted")
-    }
+
+    },
+
+
+
+    createUser() {
+      axios.post('http://127.0.0.1:8000/api/users',
+        {
+          username: this.username,
+          email: this.email,
+          password: this.password
+
+        }).then(
+          (response) => {
+            const token = response.data.token;
+            const user = response.data.user;
+
+            this.setToken(token);
+            this.setUser(user);
+            this.$router.push({ name: 'home' });
+            this.flashMessage.show({
+              status: 'success',
+              title: 'Successful Authentication',
+              message: 'Congratulation :) !! you have successfully been logged in'
+            });
+          })
+        .catch((error) => {
+
+          this.flashMessage.show({
+            status: 'warning',
+            title: 'Failed Authentication',
+            message: 'Invalid username or password. Enter the correct credentials and TRY AGAIN !!'
+          });
+
+          console.log(error);
+
+        })
+    },
+    async loginUser() {
+      await axios.post('http://127.0.0.1:8000/api/login',
+        {
+          username: this.username,
+          password: this.password
+
+        }).then(
+          (response) => {
+            if (response.data.isAuthenticated == true) {
+              const token = response.data.token;
+              const user = response.data.user;
+
+
+              this.$store.commit("setToken", token, true);
+              this.$store.commit("setUser", user);
+
+              this.$router.push({ name: 'home' });
+
+              this.flashMessage.success({
+                title: response.data.title,
+                message: response.data.message,
+                time: 5000,
+
+              });
+              console.log(response) 
+            }
+            else {
+             this.$refs.form.reset()
+              //  other properties include: status, title, message, time, icon, flashMessageStyle(iconStyle, contentStyle,titleStyle, textStyle)
+              this.flashMessage.error({
+                title: response.data.title,
+                message: response.data.message,
+                time: 5000,
+
+              });
+
+
+              console.log(response)
+
+            }
+
+
+          })
+        .catch((error) => {
+                      this.$refs.form.reset() 
+              this.flashMessage.error({
+                title: "Error",
+                message: "Something went wrong. try Again",
+                time: 5000,
+
+              });
+
+              console.log(error)
+        })
+
+
+    },
+    getPosts() {
+
+    },
+
   }
 
 
@@ -162,7 +288,8 @@ export default {
   font-size: 22pt;
   font-weight: 800;
 }
-span{
-  color:red;
+
+span {
+  color: red;
 }
 </style>
